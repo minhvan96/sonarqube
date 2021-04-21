@@ -1,0 +1,9 @@
+docker pull sonarqube
+docker volume create --name sonarqube_data
+docker volume create --name sonarqube_logs
+docker volume create --name sonarqube_extensions
+docker run --rm -p 9000:9000 -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube
+
+dotnet sonarscanner begin /k:"TEST_Ef_Performance" /d:sonar.login="e8ebce7035c287ca0c549a4d82c9bf1a620c1b78"
+dotnet build
+dotnet sonarscanner end /d:sonar.login="e8ebce7035c287ca0c549a4d82c9bf1a620c1b78"
